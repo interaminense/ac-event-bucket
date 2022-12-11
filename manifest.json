@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "AC Event Bucket",
+  "version": "1.0",
+  "icons": {
+    "16": "assets/green.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["js/content-script.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "AC Event Bucket",
+    "default_popup": "html/popup.html"
+  }
+}
