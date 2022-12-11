@@ -1,4 +1,12 @@
-AC Event Bucket is a Chrome extension that allows Liferay Analytics Cloud developers to view real-time events sent by the applications and websites monitored on the platform in the browser console. This extension is useful for quickly and efficiently analyzing data and making real-time data-driven decisions.
+# What is AC Event Bucket?
+
+It is a Chrome extension that allows Liferay Analytics Cloud developers to view real-time events sent by the applications and websites monitored on the platform in the browser console. This extension is useful for quickly and efficiently analyzing data and making real-time data-driven decisions.
+
+### Read the installation guide
+
+[Installation guide](README-installation-guide.md)
+
+### More about this extension
 
 The `manifest.json` file included in this repository defines the properties and behaviors of the extension. It includes metadata such as the extension name, version, and icons, as well as the permissions required by the extension and the scripts that it uses. The `content_scripts` section specifies that the `content-script.js` script should be injected into all pages visited by the user, while the `background` section specifies that the `background.js` script should be run in the background. Finally, the `browser_action` section specifies that the extension should have a button in the browser toolbar with the default title "AC Event Bucket" and that clicking the button should open the `popup.html` page.
 
