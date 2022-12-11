@@ -1,0 +1,20 @@
+{
+  "name": "ac-event-bucket",
+  "version": "1.0.0",
+  "description": "It is a useful extension for Liferay Analytics Cloud developers who want to view real-time events sent by the applications and websites monitored on the platform through the browser console.",
+  "main": "index.js",
+  "scripts": {
+    "build": "vite build",
+    "zip": "zip -r ac-event-bucket.zip src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/interaminense/ac-event-bucket.git"
+  },
+  "author": "Adriano Interaminense",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/interaminense/ac-event-bucket/issues"
+  },
+  "homepage": "https://github.com/interaminense/ac-event-bucket#readme"
+}
