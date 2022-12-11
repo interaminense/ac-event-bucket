@@ -1,3 +1,5 @@
+const LOCAL_STORAGE_VALUE = "ac_events_extension_value";
+
 const PREDEFINED_STYLES = {
   fontWeight: "bold",
   padding: "5px 10px",
@@ -49,10 +51,6 @@ function getStyle(styleProps) {
   }
 
   return styleString;
-}
-
-function isValid(message) {
-  return message.type === "request_report" && message.data.status === "enabled";
 }
 
 function identityPayload(message) {
@@ -126,9 +124,11 @@ function eventPayload(message, context, event) {
   ];
 }
 
-(() => {
-  chrome.runtime.onMessage.addListener(function (message) {
-    if (isValid(message)) {
+chrome.runtime.onMessage.addListener(function (message) {
+  chrome.storage.sync.get([LOCAL_STORAGE_VALUE], function (result) {
+    const status = result[LOCAL_STORAGE_VALUE] || "enabled";
+
+    if (message.type === "request_report" && status === "enabled") {
       if (message.data.details.url.includes("identity")) {
         print(...identityPayload(message));
       } else {
@@ -141,4 +141,4 @@ function eventPayload(message, context, event) {
       }
     }
   });
-})();
+});

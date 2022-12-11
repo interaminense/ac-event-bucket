@@ -1,17 +1,12 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "AC Event Bucket",
   "version": "1.0",
   "icons": {
     "16": "assets/green.png"
   },
-  "permissions": [
-    "activeTab",
-    "storage",
-    "webRequest",
-    "webRequestBlocking",
-    "<all_urls>"
-  ],
+  "permissions": ["activeTab", "tabs", "storage", "webRequest"],
+  "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
       "matches": ["*://*/*"],
@@ -20,10 +15,10 @@
     }
   ],
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": true
+    "service_worker": "js/background.js",
+    "type": "module"
   },
-  "browser_action": {
+  "action": {
     "default_title": "AC Event Bucket",
     "default_popup": "html/popup.html"
   }
