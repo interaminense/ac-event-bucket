@@ -5,7 +5,7 @@
   "icons": {
     "16": "assets/green.png"
   },
-  "permissions": ["activeTab", "tabs", "storage", "webRequest"],
+  "permissions": ["tabs", "storage", "webRequest"],
   "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
