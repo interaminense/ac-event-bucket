@@ -1,0 +1,54 @@
+.popup {
+  width: 200px;
+  padding: 0.5rem;
+}
+
+.popup .title {
+  margin: 0 0 0.5rem 0;
+}
+
+.popup .button {
+  background-color: #80acff;
+  border-radius: 4px;
+  border: 0;
+  cursor: pointer;
+  font-size: 10px;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  font-weight: 600;
+}
+
+.popup .button:hover {
+  background-color: #a9c7ff;
+}
+
+.popup #status {
+  color: white;
+  padding: 0.1rem 0.5rem;
+  border-radius: 20px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.popup #status.enabled {
+  background: #1ba32f;
+}
+
+.popup #status.disabled {
+  background: #a31b1b;
+}
+
+.popup .footer {
+  margin-top: 1rem;
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.popup a {
+  color: #333;
+}
