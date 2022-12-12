@@ -2,6 +2,9 @@
 
 It is a Chrome extension that allows Liferay Analytics Cloud developers to view real-time events sent by the applications and websites monitored on the platform in the browser console. This extension is useful for quickly and efficiently analyzing data and making real-time data-driven decisions.
 
+<img src="https://user-images.githubusercontent.com/12699849/206938760-f85209c7-fac0-44e5-9ecf-9d60c1daab48.png" width="100%">
+
+
 ### Read the installation guide
 
 [Installation guide](README-installation-guide.md)
