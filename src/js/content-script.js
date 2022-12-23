@@ -1,10 +1,11 @@
-const LOCAL_STORAGE_VALUE = "ac_events_extension_value";
+const LOCAL_STORAGE_STATUS = "ac_events_extension_status";
+const LOCAL_STORAGE_THEME_NAME = "ac_events_extension_theme_name";
 
 const PREDEFINED_STYLES = {
   fontWeight: "bold",
-  padding: "5px 10px",
-  borderRadius: "5px",
-  marginRight: "5px",
+  padding: "4px 8px",
+  borderRadius: "4px",
+  marginRight: "4px",
 };
 
 function convertDate(dateStr) {
@@ -79,15 +80,42 @@ function identityPayload(message) {
   ];
 }
 
-function eventPayload(message, context, event) {
+function getApplicationIdColorBasedOnThemeName(themeName) {
+  if (themeName === "dark") {
+    return {
+      color: "#333",
+      backgroundColor: "#fff",
+    };
+  }
+
+  return {
+    color: "#fff",
+    backgroundColor: "#333",
+  };
+}
+
+function getSecondaryMessageColorBasedOnThemeName(themeName) {
+  if (themeName === "dark") {
+    return {
+      color: "#f0f0f0",
+      backgroundColor: "#333",
+    };
+  }
+
+  return {
+    color: "#333",
+    backgroundColor: "#f0f0f0",
+  };
+}
+
+function eventPayload(message, context, event, themeName) {
   return [
     [
       {
         value: event.applicationId,
         style: getStyle({
           ...PREDEFINED_STYLES,
-          color: "#fff",
-          backgroundColor: "#333",
+          ...getApplicationIdColorBasedOnThemeName(themeName),
         }),
       },
       {
@@ -102,16 +130,14 @@ function eventPayload(message, context, event) {
         value: getIndividualsMessage(message.data.payload.emailAddressHashed),
         style: getStyle({
           ...PREDEFINED_STYLES,
-          color: "#333",
-          backgroundColor: "#f0f0f0",
+          ...getSecondaryMessageColorBasedOnThemeName(themeName),
         }),
       },
       {
         value: convertDate(event.eventDate),
         style: getStyle({
           ...PREDEFINED_STYLES,
-          color: "#333",
-          backgroundColor: "#f0f0f0",
+          ...getSecondaryMessageColorBasedOnThemeName(themeName),
         }),
       },
     ],
@@ -125,8 +151,8 @@ function eventPayload(message, context, event) {
 }
 
 chrome.runtime.onMessage.addListener(function (message) {
-  chrome.storage.sync.get([LOCAL_STORAGE_VALUE], function (result) {
-    const status = result[LOCAL_STORAGE_VALUE] || "enabled";
+  chrome.storage.sync.get([LOCAL_STORAGE_STATUS], function (initialStatus) {
+    const status = initialStatus[LOCAL_STORAGE_STATUS] || "enabled";
 
     if (message.type === "request_report" && status === "enabled") {
       if (message.data.details.url.includes("identity")) {
@@ -135,9 +161,21 @@ chrome.runtime.onMessage.addListener(function (message) {
         const context = { ...message.data.payload };
         delete context.events;
 
-        message.data.payload.events.forEach((event) => {
-          print(...eventPayload(message, context, event));
-        });
+        chrome.storage.sync.get(
+          [LOCAL_STORAGE_THEME_NAME],
+          function (themeName) {
+            message.data.payload.events.forEach((event) => {
+              print(
+                ...eventPayload(
+                  message,
+                  context,
+                  event,
+                  themeName[LOCAL_STORAGE_THEME_NAME]
+                )
+              );
+            });
+          }
+        );
       }
     }
   });

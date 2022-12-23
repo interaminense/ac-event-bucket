@@ -14,6 +14,7 @@
       "run_at": "document_end"
     }
   ],
+  "devtools_page": "html/devtools.html",
   "background": {
     "service_worker": "js/background.js",
     "type": "module"

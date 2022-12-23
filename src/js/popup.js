@@ -1,14 +1,14 @@
-const LOCAL_STORAGE_VALUE = "ac_events_extension_value";
+const LOCAL_STORAGE_STATUS = "ac_events_extension_status";
 
 const statusElement = document.getElementById("status");
 const toggleBtn = document.getElementById("toggleBtn");
 
 function updateStatus() {
-  chrome.storage.sync.get([LOCAL_STORAGE_VALUE], function (result) {
-    const prevStatus = result[LOCAL_STORAGE_VALUE] || "enabled";
+  chrome.storage.sync.get([LOCAL_STORAGE_STATUS], function (result) {
+    const prevStatus = result[LOCAL_STORAGE_STATUS] || "enabled";
     const newStatus = prevStatus === "enabled" ? "disabled" : "enabled";
 
-    chrome.storage.sync.set({ [LOCAL_STORAGE_VALUE]: newStatus });
+    chrome.storage.sync.set({ [LOCAL_STORAGE_STATUS]: newStatus });
 
     updateElements(newStatus);
   });
@@ -31,8 +31,8 @@ function updateElements(status) {
 (() => {
   toggleBtn.addEventListener("click", updateStatus);
 
-  chrome.storage.sync.get([LOCAL_STORAGE_VALUE], function (result) {
-    const status = result[LOCAL_STORAGE_VALUE] || "enabled";
+  chrome.storage.sync.get([LOCAL_STORAGE_STATUS], function (result) {
+    const status = result[LOCAL_STORAGE_STATUS] || "enabled";
 
     updateElements(status);
   });
