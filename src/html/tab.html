@@ -16,18 +16,21 @@
       </div>
     </div>
 
-    <div id="sub-header" class="hidden sticky top-[48px] z-10 bg-gray-900 border-b border-gray-800 px-4 py-2 flex items-center gap-6">
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-gray-500 uppercase tracking-wider">Channel ID</span>
-        <span id="channel-id" class="text-xs text-gray-300 font-semibold"></span>
+    <div id="sub-header" class="hidden sticky top-[50px] z-10 bg-gray-900 border-b border-gray-800 px-4 py-2 flex items-center justify-between gap-6">
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-gray-500 uppercase tracking-wider">Channel ID</span>
+          <span id="channel-id" class="text-xs text-gray-300 font-semibold"></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-gray-500 uppercase tracking-wider">Data Source ID</span>
+          <span id="data-source-id" class="text-xs text-gray-300 font-semibold"></span>
+        </div>
       </div>
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-gray-500 uppercase tracking-wider">Data Source ID</span>
-        <span id="data-source-id" class="text-xs text-gray-300 font-semibold"></span>
-      </div>
+      <input id="search" type="text" placeholder="Search by event ID or application ID..." class="text-xs bg-gray-800 text-gray-300 border border-gray-700 rounded px-2 py-1 focus:outline-none w-72 placeholder-gray-600" />
     </div>
 
-<div id="events-list" class="p-4 pb-12 flex flex-col gap-2">
+    <div id="events-list" class="p-4 pb-12 flex flex-col gap-2">
       <p class="empty-state text-gray-500 text-center mt-16 text-sm">No events captured yet. Browse a site monitored by Liferay Analytics Cloud.</p>
     </div>
 

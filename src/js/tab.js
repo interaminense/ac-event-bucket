@@ -8,6 +8,19 @@ const subHeader = document.getElementById("sub-header");
 const channelIdEl = document.getElementById("channel-id");
 const dataSourceIdEl = document.getElementById("data-source-id");
 const analyticsVersionEl = document.getElementById("analytics-version");
+const searchEl = document.getElementById("search");
+
+function applySearch() {
+  const term = searchEl.value.toLowerCase();
+  eventsList.querySelectorAll(".event-row").forEach((row) => {
+    const match = !term ||
+      row.dataset.applicationId.toLowerCase().includes(term) ||
+      row.dataset.eventId.toLowerCase().includes(term);
+    row.classList.toggle("hidden", !match);
+  });
+}
+
+searchEl.addEventListener("input", applySearch);
 
 function convertDate(dateStr) {
   const date = new Date(dateStr);
@@ -52,9 +65,11 @@ function syntaxHighlight(json) {
 }
 
 
-function createEventRow(badges, payload, dateBadge = null) {
+function createEventRow(badges, payload, dateBadge = null, meta = {}) {
   const row = document.createElement("div");
-  row.className = "bg-gray-900 border border-gray-800 rounded-lg p-3 hover:border-gray-600 transition-colors";
+  row.className = "event-row bg-gray-900 border border-gray-800 rounded-lg p-3 hover:border-gray-600 transition-colors";
+  row.dataset.applicationId = meta.applicationId || "";
+  row.dataset.eventId = meta.eventId || "";
 
   const badgesDiv = document.createElement("div");
   badgesDiv.className = "flex items-center justify-between gap-2";
@@ -108,7 +123,8 @@ function renderEvents(message) {
       { text: getIndividualsMessage(message.data.payload.emailAddressHashed), cls: "bg-gray-800 text-gray-300" },
     ];
     const dateBadge = { text: convertDate(event.eventDate), cls: "bg-gray-800 text-gray-400" };
-    prependRow(createEventRow(badges, { event, ...context }, dateBadge));
+    const meta = { applicationId: event.applicationId, eventId: event.eventId };
+    prependRow(createEventRow(badges, { event, ...context }, dateBadge, meta));
   });
 }
 
@@ -116,6 +132,7 @@ function prependRow(row) {
   const emptyState = eventsList.querySelector(".empty-state");
   if (emptyState) emptyState.remove();
   eventsList.prepend(row);
+  applySearch();
 }
 
 function updateSubHeader(payload) {
@@ -153,6 +170,7 @@ toggleBtn.addEventListener("click", updateStatus);
 clearBtn.addEventListener("click", () => {
   eventsList.innerHTML = '<p class="empty-state text-gray-500 text-center mt-16 text-sm">No events captured yet. Browse a site monitored by Liferay Analytics Cloud.</p>';
   subHeader.classList.add("hidden");
+  searchEl.value = "";
 });
 
 chrome.storage.sync.get([LOCAL_STORAGE_STATUS], function (result) {
