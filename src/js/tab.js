@@ -150,6 +150,24 @@ function renderEvents(message) {
   });
 }
 
+function createEmptyState() {
+  const wrapper = document.createElement("div");
+  wrapper.className = "empty-state flex flex-col items-center gap-3 mt-16";
+
+  const msg = document.createElement("p");
+  msg.className = "text-gray-500 text-sm";
+  msg.textContent = "No events captured yet. Browse a site monitored by Liferay Analytics Cloud.";
+
+  const btn = document.createElement("button");
+  btn.className = "text-xs px-3 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-400 transition-colors";
+  btn.textContent = "Reload page";
+  btn.addEventListener("click", () => chrome.devtools.inspectedWindow.reload({}));
+
+  wrapper.appendChild(msg);
+  wrapper.appendChild(btn);
+  return wrapper;
+}
+
 function prependRow(row) {
   const emptyState = eventsList.querySelector(".empty-state");
   if (emptyState) emptyState.remove();
@@ -190,11 +208,14 @@ function updateStatus() {
 toggleBtn.addEventListener("click", updateStatus);
 
 clearBtn.addEventListener("click", () => {
-  eventsList.innerHTML = '<p class="empty-state text-gray-500 text-center mt-16 text-sm">No events captured yet. Browse a site monitored by Liferay Analytics Cloud.</p>';
+  eventsList.innerHTML = "";
+  eventsList.appendChild(createEmptyState());
   subHeader.classList.add("hidden");
   searchEl.value = "";
   eventIdColorMap.clear();
 });
+
+eventsList.appendChild(createEmptyState());
 
 chrome.storage.sync.get([LOCAL_STORAGE_STATUS], function (result) {
   updateElements(result[LOCAL_STORAGE_STATUS] || "enabled");
