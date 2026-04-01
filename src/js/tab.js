@@ -7,6 +7,7 @@ const eventsList = document.getElementById("events-list");
 const subHeader = document.getElementById("sub-header");
 const channelIdEl = document.getElementById("channel-id");
 const dataSourceIdEl = document.getElementById("data-source-id");
+const individualEl = document.getElementById("individual");
 const analyticsVersionEl = document.getElementById("analytics-version");
 const searchEl = document.getElementById("search");
 
@@ -181,6 +182,12 @@ function updateSubHeader(payload) {
   }
   if (payload.channelId) channelIdEl.textContent = payload.channelId;
   if (payload.dataSourceId) dataSourceIdEl.textContent = payload.dataSourceId;
+
+  const isKnown = !!payload.emailAddressHashed;
+  individualEl.textContent = isKnown ? "Known" : "Anonymous";
+  individualEl.className = isKnown
+    ? "text-xs font-semibold text-emerald-400 uppercase tracking-wider"
+    : "text-xs font-semibold text-gray-400 uppercase tracking-wider";
 }
 
 function updateElements(status) {
