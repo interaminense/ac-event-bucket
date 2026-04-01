@@ -10,6 +10,28 @@ const dataSourceIdEl = document.getElementById("data-source-id");
 const analyticsVersionEl = document.getElementById("analytics-version");
 const searchEl = document.getElementById("search");
 
+const EVENT_ID_COLORS = [
+  "bg-blue-900 text-blue-300",
+  "bg-purple-900 text-purple-300",
+  "bg-pink-900 text-pink-300",
+  "bg-yellow-900 text-yellow-300",
+  "bg-orange-900 text-orange-300",
+  "bg-cyan-900 text-cyan-300",
+  "bg-rose-900 text-rose-300",
+  "bg-indigo-900 text-indigo-300",
+  "bg-teal-900 text-teal-300",
+  "bg-lime-900 text-lime-300",
+];
+
+const eventIdColorMap = new Map();
+
+function getEventIdColor(eventId) {
+  if (!eventIdColorMap.has(eventId)) {
+    eventIdColorMap.set(eventId, EVENT_ID_COLORS[eventIdColorMap.size % EVENT_ID_COLORS.length]);
+  }
+  return eventIdColorMap.get(eventId);
+}
+
 function applySearch() {
   const term = searchEl.value.toLowerCase();
   eventsList.querySelectorAll(".event-row").forEach((row) => {
@@ -119,7 +141,7 @@ function renderEvents(message) {
   message.data.payload.events.forEach((event) => {
     const badges = [
       { text: event.applicationId, cls: "bg-gray-700 text-white" },
-      { text: event.eventId, cls: "bg-blue-900 text-blue-300" },
+      { text: event.eventId, cls: getEventIdColor(event.eventId) },
       { text: getIndividualsMessage(message.data.payload.emailAddressHashed), cls: "bg-gray-800 text-gray-300" },
     ];
     const dateBadge = { text: convertDate(event.eventDate), cls: "bg-gray-800 text-gray-400" };
@@ -171,6 +193,7 @@ clearBtn.addEventListener("click", () => {
   eventsList.innerHTML = '<p class="empty-state text-gray-500 text-center mt-16 text-sm">No events captured yet. Browse a site monitored by Liferay Analytics Cloud.</p>';
   subHeader.classList.add("hidden");
   searchEl.value = "";
+  eventIdColorMap.clear();
 });
 
 chrome.storage.sync.get([LOCAL_STORAGE_STATUS], function (result) {
