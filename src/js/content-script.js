@@ -150,33 +150,4 @@ function eventPayload(message, context, event, themeName) {
   ];
 }
 
-chrome.runtime.onMessage.addListener(function (message) {
-  chrome.storage.sync.get([LOCAL_STORAGE_STATUS], function (initialStatus) {
-    const status = initialStatus[LOCAL_STORAGE_STATUS] || "enabled";
-
-    if (message.type === "request_report" && status === "enabled") {
-      if (message.data.details.url.includes("identity")) {
-        print(...identityPayload(message));
-      } else {
-        const context = { ...message.data.payload };
-        delete context.events;
-
-        chrome.storage.sync.get(
-          [LOCAL_STORAGE_THEME_NAME],
-          function (themeName) {
-            message.data.payload.events.forEach((event) => {
-              print(
-                ...eventPayload(
-                  message,
-                  context,
-                  event,
-                  themeName[LOCAL_STORAGE_THEME_NAME]
-                )
-              );
-            });
-          }
-        );
-      }
-    }
-  });
-});
+chrome.runtime.onMessage.addListener(function () {});
