@@ -2,36 +2,27 @@
 <html>
   <head>
     <title>AC Events Popup</title>
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/tailwind.css" />
   </head>
-  <body>
-    <div class="popup">
-      <h3 class="title">AC Event Bucket</h3>
-
-      <p>
-        It is a useful extension for Liferay Analytics Cloud developers who want
-        to view real-time events sent by the applications and websites monitored
-        on the platform through the browser console.
-      </p>
-
-      <div>
-        Status: <span id="status"></span>
-        <button class="button" id="toggleBtn"></button>
+  <body class="bg-gray-950 text-gray-100 font-mono text-sm w-56">
+    <div class="p-3 flex flex-col gap-3">
+      <div class="flex items-center gap-2">
+        <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+        <span class="font-semibold tracking-wide text-white text-sm">AC Event Bucket</span>
       </div>
 
-      <div class="footer">
-        <small class="version">
-          <div>version v1.1.1</div>
-          <div>compatibility chrome browser 55+</div>
-          <a
-            href="https://github.com/interaminense/ac-event-bucket"
-            target="_blank"
-            >ac event bucket github</a
-          >
-        </small>
+      <div class="flex items-center gap-2">
+        <span class="text-gray-400 text-xs">Status:</span>
+        <span id="status" class="text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider"></span>
+      </div>
+
+      <button id="toggleBtn" class="w-full text-xs py-1.5 rounded bg-gray-700 hover:bg-gray-600 text-gray-200 transition-colors uppercase tracking-wider font-semibold"></button>
+
+      <div class="border-t border-gray-800 pt-2 flex flex-col gap-1">
+        <div class="text-gray-600 text-xs">v1.1.1 · chrome 55+</div>
+        <a href="https://github.com/interaminense/ac-event-bucket" target="_blank" class="text-gray-500 hover:text-gray-300 text-xs transition-colors">GitHub ↗</a>
       </div>
     </div>
-
     <script src="../js/popup.js"></script>
   </body>
 </html>
