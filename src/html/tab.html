@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AC Event Bucket</title>
+    <link rel="stylesheet" href="../css/tailwind.css" />
+  </head>
+  <body class="bg-gray-950 text-gray-100 min-h-screen font-mono text-sm">
+    <div class="sticky top-0 z-10 bg-gray-900 border-b border-gray-800 px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span id="status" class="text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider"></span>
+        <span class="font-semibold tracking-wide text-white">AC EVENT BUCKET</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="toggleBtn" class="text-xs px-3 py-1 rounded bg-gray-700 hover:bg-gray-600 text-gray-200 transition-colors uppercase tracking-wider font-semibold"></button>
+        <button id="clearBtn" class="text-xs px-3 py-1 rounded bg-gray-700 hover:bg-gray-600 text-gray-200 transition-colors uppercase tracking-wider font-semibold">Clear</button>
+      </div>
+    </div>
+
+    <div id="sub-header" class="hidden sticky top-[50px] z-10 bg-gray-900 border-b border-gray-800 px-4 py-2 flex items-center gap-6">
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-500 uppercase tracking-wider">Channel ID</span>
+        <span id="channel-id" class="text-xs text-gray-300 font-semibold"></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-500 uppercase tracking-wider">Data Source ID</span>
+        <span id="data-source-id" class="text-xs text-gray-300 font-semibold"></span>
+      </div>
+    </div>
+
+<div id="events-list" class="p-4 pb-12 flex flex-col gap-2">
+      <p class="empty-state text-gray-500 text-center mt-16 text-sm">No events captured yet. Browse a site monitored by Liferay Analytics Cloud.</p>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 px-4 py-2 flex justify-end items-center gap-4">
+      <a href="https://github.com/interaminense" target="_blank" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">@interaminense</a>
+      <span id="analytics-version" class="text-xs text-gray-500">Analytics SDK: detecting...</span>
+    </div>
+
+    <script src="../js/tab.js"></script>
+  </body>
+</html>
