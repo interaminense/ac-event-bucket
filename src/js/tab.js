@@ -1,28 +1,17 @@
 const LOCAL_STORAGE_STATUS = "ac_events_extension_status";
 
-const statusElement = document.getElementById("status");
-const toggleBtn = document.getElementById("toggleBtn");
-const clearBtn = document.getElementById("clearBtn");
-const eventsList = document.getElementById("events-list");
-const subHeader = document.getElementById("sub-header");
-const channelIdEl = document.getElementById("channel-id");
-const dataSourceIdEl = document.getElementById("data-source-id");
-const individualEl = document.getElementById("individual");
+const statusElement     = document.getElementById("status");
+const toggleBtn         = document.getElementById("toggleBtn");
+const clearBtn          = document.getElementById("clearBtn");
+const eventsList        = document.getElementById("events-list");
+const subHeader         = document.getElementById("sub-header");
+const channelIdEl       = document.getElementById("channel-id");
+const dataSourceIdEl    = document.getElementById("data-source-id");
+const individualEl      = document.getElementById("individual");
 const analyticsVersionEl = document.getElementById("analytics-version");
-const searchEl = document.getElementById("search");
+const searchEl          = document.getElementById("search");
 
-const EVENT_ID_COLORS = [
-  "bg-blue-900 text-blue-300",
-  "bg-purple-900 text-purple-300",
-  "bg-pink-900 text-pink-300",
-  "bg-yellow-900 text-yellow-300",
-  "bg-orange-900 text-orange-300",
-  "bg-cyan-900 text-cyan-300",
-  "bg-rose-900 text-rose-300",
-  "bg-indigo-900 text-indigo-300",
-  "bg-teal-900 text-teal-300",
-  "bg-lime-900 text-lime-300",
-];
+const EVENT_ID_COLORS = ["ev-0", "ev-1", "ev-2", "ev-3", "ev-4", "ev-5", "ev-6", "ev-7", "ev-8", "ev-9"];
 
 const eventIdColorMap = new Map();
 
@@ -59,9 +48,9 @@ function getIndividualsMessage(emailAddressHashed) {
   return emailAddressHashed ? "Known" : "Anonymous";
 }
 
-function createBadge(text, colorClasses) {
+function createBadge(text, cls) {
   const span = document.createElement("span");
-  span.className = `text-xs font-bold px-2 py-0.5 rounded ${colorClasses}`;
+  span.className = `badge ${cls}`;
   span.textContent = text;
   return span;
 }
@@ -72,33 +61,32 @@ function syntaxHighlight(json) {
     (match) => {
       if (/^"/.test(match)) {
         if (/:$/.test(match)) {
-          return `<span class="text-blue-400">${match}</span>`;
+          return `<span class="sh-key">${match}</span>`;
         }
-        return `<span class="text-emerald-400">${match}</span>`;
+        return `<span class="sh-str">${match}</span>`;
       }
       if (/true|false/.test(match)) {
-        return `<span class="text-yellow-400">${match}</span>`;
+        return `<span class="sh-bool">${match}</span>`;
       }
       if (/null/.test(match)) {
-        return `<span class="text-red-400">${match}</span>`;
+        return `<span class="sh-null">${match}</span>`;
       }
-      return `<span class="text-orange-400">${match}</span>`;
+      return `<span class="sh-num">${match}</span>`;
     }
   );
 }
 
-
 function createEventRow(badges, payload, dateBadge = null, meta = {}) {
   const row = document.createElement("div");
-  row.className = "event-row bg-gray-900 border border-gray-800 rounded-lg p-3 hover:border-gray-600 transition-colors";
+  row.className = "event-row";
   row.dataset.applicationId = meta.applicationId || "";
   row.dataset.eventId = meta.eventId || "";
 
   const badgesDiv = document.createElement("div");
-  badgesDiv.className = "flex items-center justify-between gap-2";
+  badgesDiv.className = "event-badges-row";
 
   const leftBadges = document.createElement("div");
-  leftBadges.className = "flex items-center gap-2 flex-wrap cursor-pointer";
+  leftBadges.className = "event-badges-left";
   badges.forEach((b) => leftBadges.appendChild(createBadge(b.text, b.cls)));
   badgesDiv.appendChild(leftBadges);
 
@@ -107,10 +95,10 @@ function createEventRow(badges, payload, dateBadge = null, meta = {}) {
   }
 
   const detail = document.createElement("div");
-  detail.className = "hidden mt-3 pt-3 border-t border-gray-800";
+  detail.className = "event-detail hidden";
 
   const jsonView = document.createElement("pre");
-  jsonView.className = "text-xs text-gray-300 whitespace-pre-wrap break-all bg-gray-950 rounded p-3";
+  jsonView.className = "event-json";
   jsonView.innerHTML = syntaxHighlight(payload);
 
   detail.appendChild(jsonView);
@@ -128,8 +116,8 @@ function createEventRow(badges, payload, dateBadge = null, meta = {}) {
 function renderIdentityEvent(message) {
   updateSubHeader(message.data.payload);
   const badges = [
-    { text: "Identity", cls: "bg-emerald-900 text-emerald-300" },
-    { text: getIndividualsMessage(message.data.payload.emailAddressHashed), cls: "bg-gray-800 text-gray-300" },
+    { text: "Identity",   cls: "badge-identity" },
+    { text: getIndividualsMessage(message.data.payload.emailAddressHashed), cls: "badge-individual" },
   ];
   prependRow(createEventRow(badges, { payload: message.data.payload }));
 }
@@ -141,11 +129,11 @@ function renderEvents(message) {
 
   message.data.payload.events.forEach((event) => {
     const badges = [
-      { text: event.applicationId, cls: "bg-gray-700 text-white" },
-      { text: event.eventId, cls: getEventIdColor(event.eventId) },
-      { text: getIndividualsMessage(message.data.payload.emailAddressHashed), cls: "bg-gray-800 text-gray-300" },
+      { text: event.applicationId, cls: "badge-app" },
+      { text: event.eventId,       cls: getEventIdColor(event.eventId) },
+      { text: getIndividualsMessage(message.data.payload.emailAddressHashed), cls: "badge-individual" },
     ];
-    const dateBadge = { text: convertDate(event.eventDate), cls: "bg-gray-800 text-gray-400" };
+    const dateBadge = { text: convertDate(event.eventDate), cls: "badge-date" };
     const meta = { applicationId: event.applicationId, eventId: event.eventId };
     prependRow(createEventRow(badges, { event, ...context }, dateBadge, meta));
   });
@@ -153,14 +141,14 @@ function renderEvents(message) {
 
 function createEmptyState() {
   const wrapper = document.createElement("div");
-  wrapper.className = "empty-state flex flex-col items-center gap-3 mt-16";
+  wrapper.className = "empty-state";
 
   const msg = document.createElement("p");
-  msg.className = "text-gray-500 text-sm";
+  msg.className = "empty-msg";
   msg.textContent = "No events captured yet. Browse a site monitored by Liferay Analytics Cloud.";
 
   const btn = document.createElement("button");
-  btn.className = "text-xs px-3 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-400 transition-colors";
+  btn.className = "empty-reload-btn";
   btn.textContent = "Reload page";
   btn.addEventListener("click", () => chrome.devtools.inspectedWindow.reload({}));
 
@@ -180,30 +168,24 @@ function updateSubHeader(payload) {
   if (subHeader.classList.contains("hidden")) {
     subHeader.classList.remove("hidden");
   }
-  if (payload.channelId) channelIdEl.textContent = payload.channelId;
+  if (payload.channelId)    channelIdEl.textContent    = payload.channelId;
   if (payload.dataSourceId) dataSourceIdEl.textContent = payload.dataSourceId;
 
   const isKnown = !!payload.emailAddressHashed;
   individualEl.textContent = isKnown ? "Known" : "Anonymous";
-  individualEl.className = isKnown
-    ? "text-xs font-semibold text-emerald-400 uppercase tracking-wider"
-    : "text-xs font-semibold text-gray-400 uppercase tracking-wider";
+  individualEl.className   = isKnown ? "individual-known" : "individual-anon";
 }
 
 function updateElements(status) {
   statusElement.textContent = status === "enabled" ? "on" : "off";
-  if (status === "enabled") {
-    statusElement.className = "text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-emerald-900 text-emerald-400";
-  } else {
-    statusElement.className = "text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-red-900 text-red-400";
-  }
-  toggleBtn.textContent = status === "enabled" ? "Off" : "On";
+  statusElement.className   = status === "enabled" ? "status-on" : "status-off";
+  toggleBtn.textContent     = status === "enabled" ? "Off" : "On";
 }
 
 function updateStatus() {
   chrome.storage.sync.get([LOCAL_STORAGE_STATUS], function (result) {
     const prevStatus = result[LOCAL_STORAGE_STATUS] || "enabled";
-    const newStatus = prevStatus === "enabled" ? "disabled" : "enabled";
+    const newStatus  = prevStatus === "enabled" ? "disabled" : "enabled";
     chrome.storage.sync.set({ [LOCAL_STORAGE_STATUS]: newStatus });
     updateElements(newStatus);
     chrome.action.setIcon({
@@ -234,7 +216,7 @@ const analyticsVersionInterval = setInterval(() => {
     function (result, error) {
       if (error || !result) return;
       analyticsVersionEl.textContent = `Analytics SDK v${result}`;
-      analyticsVersionEl.classList.replace("text-gray-500", "text-gray-400");
+      analyticsVersionEl.classList.add("sdk-detected");
       clearInterval(analyticsVersionInterval);
     }
   );

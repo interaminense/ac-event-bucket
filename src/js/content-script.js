@@ -151,3 +151,8 @@ function eventPayload(message, context, event, themeName) {
 }
 
 chrome.runtime.onMessage.addListener(function () {});
+
+window.addEventListener("message", (event) => {
+  if (event.source !== window || event.data?.type !== "ac_enable_generator") return;
+  chrome.runtime.sendMessage({ type: "enable_generator" });
+});

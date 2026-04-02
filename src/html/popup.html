@@ -1,28 +1,170 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>AC Events Popup</title>
-    <link rel="stylesheet" href="../css/tailwind.css" />
-  </head>
-  <body class="bg-gray-950 text-gray-100 font-mono text-sm w-56">
-    <div class="p-3 flex flex-col gap-3">
-      <div class="flex items-center gap-2">
-        <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
-        <span class="font-semibold tracking-wide text-white text-sm">AC Event Bucket</span>
-      </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AC Events Popup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      <div class="flex items-center gap-2">
-        <span class="text-gray-400 text-xs">Status:</span>
-        <span id="status" class="text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider"></span>
-      </div>
+    :root {
+      --bg:         #07090d;
+      --bg-panel:   #090c12;
+      --bg-surface: #0d1018;
+      --border:     #181d2c;
+      --text-1:     #dde3f5;
+      --text-2:     #6b7799;
+      --text-3:     #313a52;
+      --green:      #3dfc8d;
+      --green-bg:   #071c11;
+      --red:        #ff4f6e;
+      --red-bg:     #1f0a12;
+      --fn-ui:      'Bricolage Grotesque', system-ui, sans-serif;
+      --fn-mono:    'JetBrains Mono', monospace;
+    }
 
-      <button id="toggleBtn" class="w-full text-xs py-1.5 rounded bg-gray-700 hover:bg-gray-600 text-gray-200 transition-colors uppercase tracking-wider font-semibold"></button>
+    body {
+      width: 200px;
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: var(--fn-ui);
+      font-size: 13px;
+    }
 
-      <div class="border-t border-gray-800 pt-2 flex flex-col gap-1">
-        <div class="text-gray-600 text-xs">v1.1.1 · chrome 55+</div>
-        <a href="https://github.com/interaminense/ac-event-bucket" target="_blank" class="text-gray-500 hover:text-gray-300 text-xs transition-colors">GitHub ↗</a>
-      </div>
+    .popup-inner {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .popup-brand {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .popup-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    .popup-title {
+      font-family: var(--fn-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-1);
+      letter-spacing: 0.06em;
+    }
+
+    .popup-status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .popup-status-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    #status {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .status-on {
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid rgba(61,252,141,0.2);
+    }
+
+    .status-off {
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1px solid rgba(255,79,110,0.2);
+    }
+
+    #toggleBtn {
+      width: 100%;
+      padding: 7px 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--text-2);
+      font-family: var(--fn-ui);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+
+    #toggleBtn:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--text-1);
+    }
+
+    .popup-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .popup-version {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      color: var(--text-3);
+    }
+
+    .popup-link {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.1s;
+    }
+
+    .popup-link:hover { color: var(--text-2); }
+  </style>
+</head>
+<body>
+  <div class="popup-inner">
+
+    <div class="popup-brand">
+      <div class="popup-dot"></div>
+      <span class="popup-title">AC Event Bucket</span>
     </div>
-    <script src="../js/popup.js"></script>
-  </body>
+
+    <div class="popup-status-row">
+      <span class="popup-status-label">Status</span>
+      <span id="status"></span>
+    </div>
+
+    <button id="toggleBtn"></button>
+
+    <div class="popup-footer">
+      <span class="popup-version">v1.1.1 · chrome 55+</span>
+      <a href="https://github.com/interaminense/ac-event-bucket" target="_blank" class="popup-link">GitHub ↗</a>
+    </div>
+
+  </div>
+  <script src="../js/popup.js"></script>
+</body>
 </html>

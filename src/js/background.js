@@ -37,3 +37,9 @@ chrome.webRequest.onBeforeRequest.addListener(
   { urls: ["<all_urls>"] },
   ["requestBody"]
 );
+
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === "enable_generator") {
+    chrome.storage.sync.set({ ac_events_generator_enabled: true });
+  }
+});
