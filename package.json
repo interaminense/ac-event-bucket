@@ -4,8 +4,6 @@
   "description": "It is a useful extension for Liferay Analytics Cloud developers who want to view real-time events sent by the applications and websites monitored on the platform through the browser console.",
   "main": "index.js",
   "scripts": {
-    "dev": "tailwindcss -i ./src/css/input.css -o ./src/css/tailwind.css --watch",
-    "build": "tailwindcss -i ./src/css/input.css -o ./src/css/tailwind.css --minify",
     "zip": "zip -r ac-event-bucket.zip src"
   },
   "repository": {
@@ -18,8 +16,5 @@
     "url": "https://github.com/interaminense/ac-event-bucket/issues"
   },
   "homepage": "https://github.com/interaminense/ac-event-bucket#readme",
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.2.2",
-    "tailwindcss": "^4.2.2"
-  }
+  "devDependencies": {}
 }
