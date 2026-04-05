@@ -1,20 +1,20 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:         #07090d;
-  --bg-panel:   #090c12;
-  --bg-surface: #0d1018;
-  --border:     #181d2c;
-  --border-dim: #0f1320;
-  --text-1:     #dde3f5;
-  --text-2:     #6b7799;
-  --text-3:     #313a52;
+  --bg:         #0e1117;
+  --bg-panel:   #141824;
+  --bg-surface: #1a2030;
+  --border:     #2a3248;
+  --border-dim: #1e2638;
+  --text-1:     #eaeffe;
+  --text-2:     #8fa3cc;
+  --text-3:     #526080;
   --green:      #3dfc8d;
-  --green-bg:   #071c11;
+  --green-bg:   #09261a;
   --red:        #ff4f6e;
-  --red-bg:     #1f0a12;
+  --red-bg:     #2a0e18;
   --blue:       #4da6ff;
-  --blue-dim:   rgba(77,166,255,0.09);
+  --blue-dim:   rgba(77,166,255,0.11);
   --fn-ui:      'Bricolage Grotesque', system-ui, sans-serif;
   --fn-mono:    'JetBrains Mono', monospace;
 }
@@ -24,7 +24,7 @@ html, body {
   background: var(--bg);
   color: var(--text-1);
   font-family: var(--fn-ui);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
   overflow: hidden;
 }
@@ -57,7 +57,7 @@ html, body {
 
 .hdr-brand {
   font-family: var(--fn-mono);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-2);
   letter-spacing: 0.07em;
@@ -76,7 +76,7 @@ html, body {
   align-items: center;
   gap: 5px;
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: #f0b429;
 }
 
@@ -84,7 +84,7 @@ html, body {
 
 #sdk-status {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   padding: 2px 8px;
   border-radius: 2px;
   background: var(--green-bg);
@@ -97,7 +97,7 @@ html, body {
 ═══════════════════════════════════════════ */
 
 .section-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -141,7 +141,7 @@ html, body {
   border-left: 2px solid transparent;
   cursor: pointer;
   font-family: var(--fn-ui);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-2);
   text-align: left;
@@ -163,7 +163,7 @@ html, body {
 .template-group-header .label { flex: 1; }
 
 .template-group-header .chevron {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-3);
 }
 
@@ -176,7 +176,7 @@ html, body {
   border-left: 2px solid transparent;
   cursor: pointer;
   font-family: var(--fn-mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-3);
   text-align: left;
   white-space: nowrap;
@@ -230,7 +230,7 @@ html, body {
 }
 
 .field > label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -244,7 +244,7 @@ html, body {
   border-radius: 3px;
   padding: 7px 10px;
   font-family: var(--fn-mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-1);
   outline: none;
   transition: border-color 0.15s;
@@ -286,7 +286,7 @@ html, body {
 
 #add-property {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--blue);
   background: var(--blue-dim);
   border: 1px solid rgba(77,166,255,0.18);
@@ -306,7 +306,7 @@ html, body {
 }
 
 #props-empty {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-3);
   padding: 8px 12px;
   font-style: italic;
@@ -327,7 +327,7 @@ html, body {
   border: none;
   outline: none;
   font-family: var(--fn-mono);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-1);
   padding: 3px 4px;
   width: 100%;
@@ -338,7 +338,7 @@ html, body {
 
 .prop-row > span {
   font-family: var(--fn-mono);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-3);
   text-align: center;
 }
@@ -363,10 +363,10 @@ html, body {
 #send-btn {
   flex: 1;
   padding: 9px 0;
-  background: var(--green);
+  background: var(--blue);
   color: #021509;
   font-family: var(--fn-ui);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -384,7 +384,7 @@ html, body {
   background: transparent;
   color: var(--blue);
   font-family: var(--fn-ui);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   border: 1px solid rgba(77,166,255,0.24);
   border-radius: 3px;
@@ -402,7 +402,7 @@ html, body {
   background: transparent;
   color: var(--text-2);
   font-family: var(--fn-ui);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   border: 1px solid var(--border);
   border-radius: 3px;
@@ -416,7 +416,7 @@ html, body {
 #feedback {
   display: none;
   font-family: var(--fn-mono);
-  font-size: 12px;
+  font-size: 13px;
   padding: 7px 10px;
   border-radius: 3px;
 }
@@ -467,7 +467,7 @@ html, body {
 
 .activity-badge {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   min-width: 16px;
   padding: 1px 5px;
   border-radius: 8px;
@@ -497,7 +497,7 @@ html, body {
 
 .saved-event-id {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-1);
   flex: 1;
   overflow: hidden;
@@ -506,14 +506,14 @@ html, body {
 }
 
 .saved-app-id {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-3);
   font-family: var(--fn-mono);
   flex-shrink: 0;
 }
 
 .saved-prop-count {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-3);
   background: var(--bg-surface);
   padding: 0 4px;
@@ -530,7 +530,7 @@ html, body {
 
 .saved-actions button {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   padding: 1px 5px;
   border-radius: 2px;
   cursor: pointer;
@@ -562,7 +562,7 @@ html, body {
 }
 
 #saved-empty, #history-empty {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-3);
   padding: 12px;
   text-align: center;
@@ -596,7 +596,7 @@ html, body {
 
 .history-event-id {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-1);
   white-space: nowrap;
   overflow: hidden;
@@ -610,14 +610,14 @@ html, body {
 }
 
 .history-app, .history-time {
-  font-size: 10px;
+  font-size: 11px;
   font-family: var(--fn-mono);
   color: var(--text-3);
 }
 
 .btn-resend {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   padding: 1px 5px;
   border-radius: 2px;
   cursor: pointer;

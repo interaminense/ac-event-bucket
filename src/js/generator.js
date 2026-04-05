@@ -17,54 +17,53 @@ const APP_COLORS = {
 
 const EVENT_TEMPLATES = {
   Page: [
-    { eventId: "pageLoaded",       properties: { url: "https://example.com/page", title: "My Page" } },
-    { eventId: "pageViewed",       properties: { url: "https://example.com/page", title: "My Page" } },
-    { eventId: "pageDepthReached", properties: { url: "https://example.com/page", title: "My Page", depth: "50" } },
-    { eventId: "pageRead",         properties: { url: "https://example.com/page", title: "My Page" } },
-    { eventId: "pageUnloaded",     properties: { url: "https://example.com/page", title: "My Page" } },
-    { eventId: "tabFocused",       properties: { url: "https://example.com/page", title: "My Page" } },
-    { eventId: "tabBlurred",       properties: { url: "https://example.com/page", title: "My Page" } },
+    { eventId: "pageLoaded",       properties: { externalReferenceCode: "ERC-001", pageLoadTime: "320" } },
+    { eventId: "pageDepthReached", properties: { externalReferenceCode: "ERC-001", depth: "50" } },
+    { eventId: "pageRead",         properties: { externalReferenceCode: "ERC-001" } },
+    { eventId: "pageUnloaded",     properties: { externalReferenceCode: "ERC-001", viewDuration: "4500" } },
+    { eventId: "tabFocused",       properties: {} },
+    { eventId: "tabBlurred",       properties: {} },
   ],
   Blog: [
-    { eventId: "blogViewed",         properties: { entryId: "12345", title: "My Blog Post" } },
-    { eventId: "blogClicked",        properties: { entryId: "12345", title: "My Blog Post", tagName: "a" } },
-    { eventId: "blogDepthReached",   properties: { entryId: "12345", title: "My Blog Post", depth: "50" } },
-    { eventId: "blogImpressionMade", properties: { entryId: "12345", title: "My Blog Post" } },
+    { eventId: "blogViewed",         properties: { entryId: "12345", title: "My Blog Post", numberOfWords: "800", type: "blog", subtype: "article", externalReferenceCode: "ERC-001" } },
+    { eventId: "blogClicked",        properties: { entryId: "12345", tagName: "a", href: "https://example.com/target", text: "Read more", src: "" } },
+    { eventId: "blogDepthReached",   properties: { entryId: "12345", title: "My Blog Post", numberOfWords: "800", type: "blog", subtype: "article", externalReferenceCode: "ERC-001", depth: "50", sessionId: "sess-001" } },
+    { eventId: "blogImpressionMade", properties: { entryId: "12345", title: "My Blog Post", numberOfWords: "800", type: "blog", subtype: "article", externalReferenceCode: "ERC-001" } },
   ],
   Form: [
-    { eventId: "formViewed",    properties: { formId: "form-001", formName: "Contact Form" } },
-    { eventId: "formSubmitted", properties: { formId: "form-001", formName: "Contact Form" } },
-    { eventId: "fieldFocused",  properties: { formId: "form-001", formName: "Contact Form", fieldName: "email" } },
-    { eventId: "fieldBlurred",  properties: { formId: "form-001", formName: "Contact Form", fieldName: "email" } },
+    { eventId: "formViewed",    properties: { formId: "form-001", title: "Contact Form", externalReferenceCode: "ERC-001" } },
+    { eventId: "formSubmitted", properties: { formId: "form-001", title: "Contact Form", externalReferenceCode: "ERC-001" } },
+    { eventId: "fieldFocused",  properties: { formId: "form-001", title: "Contact Form", externalReferenceCode: "ERC-001", fieldName: "email" } },
+    { eventId: "fieldBlurred",  properties: { formId: "form-001", title: "Contact Form", externalReferenceCode: "ERC-001", fieldName: "email", focusDuration: "3200" } },
   ],
   Document: [
-    { eventId: "documentDownloaded",     properties: { fileEntryId: "67890", title: "My Document.pdf" } },
-    { eventId: "documentImpressionMade", properties: { fileEntryId: "67890", title: "My Document.pdf" } },
-    { eventId: "documentPreviewed",      properties: { fileEntryId: "67890", title: "My Document.pdf" } },
+    { eventId: "documentDownloaded",     properties: { fileEntryId: "67890", title: "My Document.pdf", fileEntryVersion: "1.0", externalReferenceCode: "ERC-001" } },
+    { eventId: "documentImpressionMade", properties: { fileEntryId: "67890", title: "My Document.pdf", fileEntryVersion: "1.0", externalReferenceCode: "ERC-001", type: "document", subtype: "pdf" } },
+    { eventId: "documentPreviewed",      properties: { fileEntryId: "67890", title: "My Document.pdf", fileEntryVersion: "1.0", externalReferenceCode: "ERC-001" } },
   ],
   WebContent: [
-    { eventId: "webContentViewed",         properties: { articleId: "11111", title: "My Web Content" } },
-    { eventId: "webContentClicked",        properties: { articleId: "11111", title: "My Web Content" } },
-    { eventId: "webContentImpressionMade", properties: { articleId: "11111", title: "My Web Content" } },
+    { eventId: "webContentViewed",         properties: { articleId: "11111", title: "My Web Content", numberOfWords: "500", type: "web-content", subtype: "article", webContentResourcePk: "22222", externalReferenceCode: "ERC-001" } },
+    { eventId: "webContentClicked",        properties: { articleId: "11111", tagName: "a", href: "https://example.com/target", text: "Click here", src: "" } },
+    { eventId: "webContentImpressionMade", properties: { articleId: "11111", title: "My Web Content", numberOfWords: "500", type: "web-content", subtype: "article", webContentResourcePk: "22222", externalReferenceCode: "ERC-001" } },
   ],
   ObjectEntry: [
-    { eventId: "objectEntryViewed",         properties: { objectDefinitionName: "MyObject", externalReferenceCode: "ERC-001" } },
-    { eventId: "objectEntryDownloaded",     properties: { objectDefinitionName: "MyObject", externalReferenceCode: "ERC-001" } },
-    { eventId: "objectEntryImpressionMade", properties: { objectDefinitionName: "MyObject", externalReferenceCode: "ERC-001" } },
+    { eventId: "objectEntryViewed",         properties: { objectDefinitionName: "MyObject", externalReferenceCode: "ERC-001", title: "My Object Entry", mimeType: "application/pdf", assetTags: '[{"id":"1","name":"tag-1"}]', assetCategories: '[{"id":"1","name":"category-1"}]' } },
+    { eventId: "objectEntryDownloaded",     properties: { objectDefinitionName: "MyObject", externalReferenceCode: "ERC-001", title: "My Object Entry", mimeType: "application/pdf", assetTags: '[{"id":"1","name":"tag-1"}]', assetCategories: '[{"id":"1","name":"category-1"}]' } },
+    { eventId: "objectEntryImpressionMade", properties: { objectDefinitionName: "MyObject", externalReferenceCode: "ERC-001", title: "My Object Entry", mimeType: "application/pdf", assetTags: '[{"id":"1","name":"tag-1"}]', assetCategories: '[{"id":"1","name":"category-1"}]' } },
   ],
   Custom: [
-    { eventId: "assetViewed",       properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset" } },
-    { eventId: "assetClicked",      properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset" } },
-    { eventId: "assetDownloaded",   properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset" } },
-    { eventId: "assetSubmitted",    properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset" } },
-    { eventId: "assetDepthReached", properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset", depth: "50" } },
+    { eventId: "assetViewed",       properties: { assetId: "custom-001", category: "custom", title: "My Asset", formEnabled: "false" } },
+    { eventId: "assetClicked",      properties: { assetId: "custom-001", category: "custom", title: "My Asset", tagName: "a", href: "https://example.com/target", text: "Click here", src: "" } },
+    { eventId: "assetDownloaded",   properties: { assetId: "custom-001", category: "custom", title: "My Asset" } },
+    { eventId: "assetSubmitted",    properties: { assetId: "custom-001", category: "custom", title: "My Asset" } },
+    { eventId: "assetDepthReached", properties: { assetId: "custom-001", category: "custom", title: "My Asset", depth: "50", sessionId: "sess-001" } },
   ],
   CustomEvent: [
-    { eventId: "assetViewed",       properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset" } },
-    { eventId: "assetClicked",      properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset" } },
-    { eventId: "assetDownloaded",   properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset" } },
-    { eventId: "assetSubmitted",    properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset" } },
-    { eventId: "assetDepthReached", properties: { assetId: "custom-001", assetType: "custom", assetTitle: "My Asset", depth: "50" } },
+    { eventId: "assetViewed",       properties: { assetId: "custom-001", category: "custom", title: "My Asset", formEnabled: "false" } },
+    { eventId: "assetClicked",      properties: { assetId: "custom-001", category: "custom", title: "My Asset", tagName: "a", href: "https://example.com/target", text: "Click here", src: "" } },
+    { eventId: "assetDownloaded",   properties: { assetId: "custom-001", category: "custom", title: "My Asset" } },
+    { eventId: "assetSubmitted",    properties: { assetId: "custom-001", category: "custom", title: "My Asset" } },
+    { eventId: "assetDepthReached", properties: { assetId: "custom-001", category: "custom", title: "My Asset", depth: "50", sessionId: "sess-001" } },
   ],
 };
 
@@ -232,7 +231,9 @@ function buildTemplatesList() {
         eventIdEl.value = tpl.eventId;
         applicationIdEl.value = appId;
         updateAppDot(appId);
-        setProperties(tpl.properties);
+        const props = { ...tpl.properties };
+        if ("externalReferenceCode" in props) props.externalReferenceCode = crypto.randomUUID();
+        setProperties(props);
         feedbackEl.style.display = "none";
       });
 
@@ -246,7 +247,41 @@ function buildTemplatesList() {
 
 // ── Send ───────────────────────────────────────────────────────────────────────
 
+function randomStr(len = 8) {
+  return Math.random().toString(36).slice(2, 2 + len);
+}
+
+function randomizeProperties(props) {
+  const out = {};
+  for (const [k, v] of Object.entries(props)) {
+    try {
+      const parsed = JSON.parse(v);
+      if (Array.isArray(parsed)) {
+        out[k] = JSON.stringify(parsed.map(item =>
+          (item && typeof item === "object" && "id" in item)
+            ? { ...item, id: randomStr(6) }
+            : item
+        ));
+        continue;
+      }
+    } catch {}
+    if (k === "externalReferenceCode") {
+      out[k] = crypto.randomUUID();
+      continue;
+    }
+    if (/^https?:\/\//.test(v)) {
+      const parts = v.split("/");
+      parts[parts.length - 1] = randomStr(8);
+      out[k] = parts.join("/");
+      continue;
+    }
+    out[k] = randomStr(8);
+  }
+  return out;
+}
+
 function sendEvent(eventId, applicationId, properties) {
+  const randomized = randomizeProperties(properties);
   const call = `(function() {
     try {
       if (!window.Analytics || typeof window.Analytics.send !== 'function') {
@@ -255,7 +290,7 @@ function sendEvent(eventId, applicationId, properties) {
       window.Analytics.send(
         ${JSON.stringify(eventId)},
         ${JSON.stringify(applicationId || "default")},
-        ${JSON.stringify(properties)}
+        ${JSON.stringify(randomized)}
       );
       return { ok: true };
     } catch(e) { return { ok: false, error: e.message }; }
@@ -265,7 +300,7 @@ function sendEvent(eventId, applicationId, properties) {
     if (exception) { showFeedback(false, `Error: ${exception.value || JSON.stringify(exception)}`); return; }
     if (result?.ok) {
       showFeedback(true, `"${eventId}" sent.`);
-      addToHistory(eventId, applicationId, properties);
+      addToHistory(eventId, applicationId, randomized);
     } else {
       showFeedback(false, `Failed: ${result?.error || "unknown"}`);
     }

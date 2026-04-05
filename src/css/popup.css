@@ -1,17 +1,17 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:         #07090d;
-  --bg-panel:   #090c12;
-  --bg-surface: #0d1018;
-  --border:     #181d2c;
-  --text-1:     #dde3f5;
-  --text-2:     #6b7799;
-  --text-3:     #313a52;
+  --bg:         #0e1117;
+  --bg-panel:   #141824;
+  --bg-surface: #1a2030;
+  --border:     #2a3248;
+  --text-1:     #eaeffe;
+  --text-2:     #8fa3cc;
+  --text-3:     #526080;
   --green:      #3dfc8d;
-  --green-bg:   #071c11;
+  --green-bg:   #09261a;
   --red:        #ff4f6e;
-  --red-bg:     #1f0a12;
+  --red-bg:     #2a0e18;
   --fn-ui:      'Bricolage Grotesque', system-ui, sans-serif;
   --fn-mono:    'JetBrains Mono', monospace;
 }
@@ -21,7 +21,7 @@ body {
   background: var(--bg);
   color: var(--text-1);
   font-family: var(--fn-ui);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .popup-inner {
@@ -47,7 +47,7 @@ body {
 
 .popup-title {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-1);
   letter-spacing: 0.06em;
@@ -60,7 +60,7 @@ body {
 }
 
 .popup-status-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -69,7 +69,7 @@ body {
 
 #status {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -97,7 +97,7 @@ body {
   border-radius: 3px;
   color: var(--text-2);
   font-family: var(--fn-ui);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -120,13 +120,13 @@ body {
 
 .popup-version {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-3);
 }
 
 .popup-link {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-3);
   text-decoration: none;
   transition: color 0.1s;

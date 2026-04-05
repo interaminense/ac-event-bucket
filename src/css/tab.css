@@ -1,18 +1,18 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:         #07090d;
-  --bg-panel:   #090c12;
-  --bg-surface: #0d1018;
-  --border:     #181d2c;
-  --border-dim: #0f1320;
-  --text-1:     #dde3f5;
-  --text-2:     #6b7799;
-  --text-3:     #313a52;
+  --bg:         #0e1117;
+  --bg-panel:   #141824;
+  --bg-surface: #1a2030;
+  --border:     #2a3248;
+  --border-dim: #1e2638;
+  --text-1:     #eaeffe;
+  --text-2:     #8fa3cc;
+  --text-3:     #526080;
   --green:      #3dfc8d;
-  --green-bg:   #071c11;
+  --green-bg:   #09261a;
   --red:        #ff4f6e;
-  --red-bg:     #1f0a12;
+  --red-bg:     #2a0e18;
   --blue:       #4da6ff;
   --fn-ui:      'Bricolage Grotesque', system-ui, sans-serif;
   --fn-mono:    'JetBrains Mono', monospace;
@@ -23,7 +23,7 @@ html, body {
   background: var(--bg);
   color: var(--text-1);
   font-family: var(--fn-ui);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
 }
 
@@ -50,7 +50,7 @@ html, body {
 
 .hdr-brand {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--text-2);
   letter-spacing: 0.07em;
@@ -66,7 +66,7 @@ html, body {
 
 #status {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -88,7 +88,7 @@ html, body {
 
 .hdr-btn {
   font-family: var(--fn-ui);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -137,7 +137,7 @@ html, body {
 }
 
 .sub-meta-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -146,28 +146,28 @@ html, body {
 
 .sub-meta-value {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-2);
 }
 
 .individual-known {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--green);
 }
 
 .individual-anon {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-2);
 }
 
 #search {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   width: 280px;
   padding: 4px 10px;
   background: var(--bg-surface);
@@ -226,7 +226,7 @@ html, body {
 
 .event-json {
   font-family: var(--fn-mono);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-2);
   white-space: pre-wrap;
   word-break: break-all;
@@ -247,7 +247,7 @@ html, body {
 
 .badge {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   padding: 2px 8px;
   border-radius: 3px;
@@ -282,14 +282,14 @@ html, body {
 }
 
 .empty-msg {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-3);
   text-align: center;
 }
 
 .empty-reload-btn {
   font-family: var(--fn-mono);
-  font-size: 11px;
+  font-size: 12px;
   padding: 5px 14px;
   background: var(--bg-surface);
   border: 1px solid var(--border);
@@ -322,7 +322,7 @@ html, body {
 
 .ftr-brand {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-3);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -336,7 +336,7 @@ html, body {
 
 .ftr-link {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-3);
   text-decoration: none;
   transition: color 0.1s;
@@ -346,7 +346,7 @@ html, body {
 
 #analytics-version {
   font-family: var(--fn-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-3);
 }
 
