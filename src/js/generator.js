@@ -4,6 +4,10 @@ const STORAGE_KEY  = "ac_events_generator_saved";
 const HISTORY_KEY  = "ac_events_generator_history";
 const MAX_HISTORY  = 50;
 
+const PROPERTY_TYPES = [
+  "String", "Long", "Int", "Float", "Double", "UUID", "Geolocation", "URL"
+];
+
 const APP_COLORS = {
   Page:        { color: "#60a5fa" },
   Blog:        { color: "#fb923c" },
@@ -117,7 +121,53 @@ function syncPropsEmpty() {
   propsEmptyEl.style.display = hasRows ? "none" : "";
 }
 
-function createPropertyRow(key = "", value = "") {
+function getRandomValueForType(type, origin, currentValue) {
+  switch (type) {
+    case "Int":
+      const int32 = new Int32Array(1);
+      crypto.getRandomValues(int32);
+      return int32[0].toString();
+
+    case "Long":
+      const int64 = new BigInt64Array(1);
+      crypto.getRandomValues(int64);
+      return int64[0].toString();
+
+    case "Float":
+    case "Double":
+      return (Math.random() * 1000).toFixed(2);
+
+    case "UUID":
+      return randomUUID();
+
+    case "Geolocation":
+      const lat = (Math.random() * 180 - 90).toFixed(6);
+      const lon = (Math.random() * 360 - 180).toFixed(6);
+      return `${lat},${lon}`;
+
+    case "URL":
+      const base = origin || "https://example.com";
+      const suffix = randomStr(8);
+      return base.endsWith("/") ? base + suffix : base + "/" + suffix;
+
+    case "String":
+    default:
+      // Special check: if it looks like a JSON array, try to keep the structure
+      try {
+        const parsed = JSON.parse(currentValue);
+        if (Array.isArray(parsed)) {
+          return JSON.stringify(parsed.map(item =>
+            (item && typeof item === "object" && "id" in item)
+              ? { ...item, id: randomStr(6) }
+              : item
+          ));
+        }
+      } catch {}
+      return randomStr(8);
+  }
+}
+
+function createPropertyRow(key = "", value = "", randomize = true, type = "String") {
   const row = document.createElement("div");
   row.className = "prop-row";
 
@@ -134,14 +184,51 @@ function createPropertyRow(key = "", value = "") {
   valueInput.placeholder = "value";
   valueInput.value = value;
 
+  const typeSelect = document.createElement("select");
+  PROPERTY_TYPES.forEach(t => {
+    const opt = document.createElement("option");
+    opt.value = t;
+    opt.textContent = t;
+    if (t === type) opt.selected = true;
+    typeSelect.appendChild(opt);
+  });
+
+  const toggleWrap = document.createElement("label");
+  toggleWrap.className = "prop-random-toggle";
+  toggleWrap.title = "Randomize property value";
+
+  const toggleInput = document.createElement("input");
+  toggleInput.type = "checkbox";
+  toggleInput.checked = randomize;
+
+  const toggleLabel = document.createElement("span");
+  toggleLabel.textContent = "Random";
+
+  toggleWrap.appendChild(toggleInput);
+  toggleWrap.appendChild(toggleLabel);
+
   const removeBtn = document.createElement("button");
   removeBtn.className = "btn-remove";
   removeBtn.textContent = "×";
   removeBtn.addEventListener("click", () => { row.remove(); syncPropsEmpty(); });
 
+  // Update value on interaction
+  const triggerRandomize = () => {
+    if (toggleInput.checked) {
+      chrome.devtools.inspectedWindow.eval("window.location.origin", (origin) => {
+        valueInput.value = getRandomValueForType(typeSelect.value, origin, valueInput.value);
+      });
+    }
+  };
+
+  toggleInput.addEventListener("change", triggerRandomize);
+  typeSelect.addEventListener("change", triggerRandomize);
+
   row.appendChild(keyInput);
   row.appendChild(sep);
   row.appendChild(valueInput);
+  row.appendChild(typeSelect);
+  row.appendChild(toggleWrap);
   row.appendChild(removeBtn);
   return row;
 }
@@ -149,16 +236,30 @@ function createPropertyRow(key = "", value = "") {
 function getProperties() {
   const props = {};
   propertiesListEl.querySelectorAll(".prop-row").forEach((row) => {
-    const [keyInput, valueInput] = row.querySelectorAll("input");
+    const keyInput = row.querySelector('input[type="text"]:first-child');
+    const valueInput = row.querySelector('input[type="text"]:nth-of-type(2)');
+    const typeSelect = row.querySelector('select');
+    const randomInput = row.querySelector('input[type="checkbox"]');
     const key = keyInput.value.trim();
-    if (key) props[key] = valueInput.value;
+    if (key) {
+      props[key] = {
+        value: valueInput.value,
+        randomize: randomInput.checked,
+        type: typeSelect.value
+      };
+    }
   });
   return props;
 }
 
 function setProperties(props) {
   propertiesListEl.querySelectorAll(".prop-row").forEach((r) => r.remove());
-  Object.entries(props).forEach(([k, v]) => propertiesListEl.appendChild(createPropertyRow(k, String(v))));
+  Object.entries(props).forEach(([k, v]) => {
+    const val = (v && typeof v === "object" && "value" in v) ? v.value : String(v);
+    const rand = (v && typeof v === "object" && "randomize" in v) ? v.randomize : true;
+    const type = (v && typeof v === "object" && "type" in v) ? v.type : "String";
+    propertiesListEl.appendChild(createPropertyRow(k, val, rand, type));
+  });
   syncPropsEmpty();
 }
 
@@ -251,59 +352,53 @@ function randomStr(len = 8) {
   return Math.random().toString(36).slice(2, 2 + len);
 }
 
-function randomizeProperties(props) {
+function randomUUID() {
+  return crypto.randomUUID();
+}
+
+function randomizeProperties(props, origin) {
   const out = {};
-  for (const [k, v] of Object.entries(props)) {
-    try {
-      const parsed = JSON.parse(v);
-      if (Array.isArray(parsed)) {
-        out[k] = JSON.stringify(parsed.map(item =>
-          (item && typeof item === "object" && "id" in item)
-            ? { ...item, id: randomStr(6) }
-            : item
-        ));
-        continue;
-      }
-    } catch {}
-    if (k === "externalReferenceCode") {
-      out[k] = crypto.randomUUID();
+  for (const [k, p] of Object.entries(props)) {
+    const v = (p && typeof p === "object" && "value" in p) ? p.value : p;
+    const randomize = (p && typeof p === "object" && "randomize" in p) ? p.randomize : true;
+    const type = (p && typeof p === "object" && "type" in p) ? p.type : "String";
+
+    if (!randomize) {
+      out[k] = v;
       continue;
     }
-    if (/^https?:\/\//.test(v)) {
-      const parts = v.split("/");
-      parts[parts.length - 1] = randomStr(8);
-      out[k] = parts.join("/");
-      continue;
-    }
-    out[k] = randomStr(8);
+
+    out[k] = getRandomValueForType(type, origin, v);
   }
   return out;
 }
 
 function sendEvent(eventId, applicationId, properties) {
-  const randomized = randomizeProperties(properties);
-  const call = `(function() {
-    try {
-      if (!window.Analytics || typeof window.Analytics.send !== 'function') {
-        return { ok: false, error: 'window.Analytics.send is not available' };
-      }
-      window.Analytics.send(
-        ${JSON.stringify(eventId)},
-        ${JSON.stringify(applicationId || "default")},
-        ${JSON.stringify(randomized)}
-      );
-      return { ok: true };
-    } catch(e) { return { ok: false, error: e.message }; }
-  })()`;
+  chrome.devtools.inspectedWindow.eval("window.location.origin", (origin) => {
+    const randomized = randomizeProperties(properties, origin);
+    const call = `(function() {
+      try {
+        if (!window.Analytics || typeof window.Analytics.send !== 'function') {
+          return { ok: false, error: 'window.Analytics.send is not available' };
+        }
+        window.Analytics.send(
+          ${JSON.stringify(eventId)},
+          ${JSON.stringify(applicationId || "default")},
+          ${JSON.stringify(randomized)}
+        );
+        return { ok: true };
+      } catch(e) { return { ok: false, error: e.message }; }
+    })()`;
 
-  chrome.devtools.inspectedWindow.eval(call, (result, exception) => {
-    if (exception) { showFeedback(false, `Error: ${exception.value || JSON.stringify(exception)}`); return; }
-    if (result?.ok) {
-      showFeedback(true, `"${eventId}" sent.`);
-      addToHistory(eventId, applicationId, randomized);
-    } else {
-      showFeedback(false, `Failed: ${result?.error || "unknown"}`);
-    }
+    chrome.devtools.inspectedWindow.eval(call, (result, exception) => {
+      if (exception) { showFeedback(false, `Error: ${exception.value || JSON.stringify(exception)}`); return; }
+      if (result?.ok) {
+        showFeedback(true, `"${eventId}" sent.`);
+        addToHistory(eventId, applicationId, randomized);
+      } else {
+        showFeedback(false, `Failed: ${result?.error || "unknown"}`);
+      }
+    });
   });
 }
 
