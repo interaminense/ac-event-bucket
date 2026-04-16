@@ -27,7 +27,9 @@ chrome.webRequest.onBeforeRequest.addListener(
 
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       if (tabs.length) {
-        chrome.tabs.sendMessage(tabs[0].id, message);
+        chrome.tabs.sendMessage(tabs[0].id, message).catch(() => {
+          // Ignore: receiving end does not exist (content script not yet loaded or extension reloaded)
+        });
       }
     });
 

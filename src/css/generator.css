@@ -314,33 +314,79 @@ html, body {
 
 .prop-row {
   display: grid;
-  grid-template-columns: 1fr 14px 1fr 18px;
+  grid-template-columns: 1fr 10px 1fr 90px 75px 18px;
   align-items: center;
+  gap: 4px;
   padding: 2px 8px;
   transition: background 0.1s;
 }
 
 .prop-row:hover { background: rgba(255,255,255,0.02); }
 
-.prop-row input {
+.prop-row input[type="text"],
+.prop-row select {
   background: none;
   border: none;
   outline: none;
   font-family: var(--fn-mono);
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-1);
-  padding: 3px 4px;
+  padding: 3px 2px;
   width: 100%;
 }
 
-.prop-row input:first-child { color: var(--blue); }
-.prop-row input::placeholder { color: var(--text-3); }
+.prop-row input[type="text"]:first-child { color: var(--blue); }
+.prop-row input[type="text"]::placeholder { color: var(--text-3); }
+
+.prop-row select {
+  color: var(--text-2);
+  cursor: pointer;
+  background: var(--bg-surface);
+  border-radius: 2px;
+}
+
+.prop-row select option {
+  background: var(--bg-panel);
+  color: var(--text-1);
+}
 
 .prop-row > span {
   font-family: var(--fn-mono);
   font-size: 13px;
   color: var(--text-3);
   text-align: center;
+}
+
+.prop-random-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+  padding: 0 4px;
+}
+
+.prop-random-toggle input {
+  cursor: pointer;
+  accent-color: var(--blue);
+  width: 12px;
+  height: 12px;
+}
+
+.prop-random-toggle span {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+.prop-random-toggle:hover span {
+  color: var(--text-2);
+}
+
+.prop-random-toggle input:checked + span {
+  color: var(--blue);
 }
 
 .btn-remove {
