@@ -21,24 +21,24 @@ const APP_COLORS = {
 
 const EVENT_TEMPLATES = {
   Page: [
-    { eventId: "pageLoaded",       properties: { externalReferenceCode: "ERC-001", pageLoadTime: "320" } },
-    { eventId: "pageDepthReached", properties: { externalReferenceCode: "ERC-001", depth: "50" } },
+    { eventId: "pageLoaded",       properties: { externalReferenceCode: "ERC-001", pageLoadTime: 320 } },
+    { eventId: "pageDepthReached", properties: { externalReferenceCode: "ERC-001", depth: 50 } },
     { eventId: "pageRead",         properties: { externalReferenceCode: "ERC-001" } },
-    { eventId: "pageUnloaded",     properties: { externalReferenceCode: "ERC-001", viewDuration: "4500" } },
+    { eventId: "pageUnloaded",     properties: { externalReferenceCode: "ERC-001", viewDuration: 4500 } },
     { eventId: "tabFocused",       properties: {} },
     { eventId: "tabBlurred",       properties: {} },
   ],
   Blog: [
-    { eventId: "blogViewed",         properties: { entryId: "12345", title: "My Blog Post", numberOfWords: "800", type: "blog", subtype: "article", externalReferenceCode: "ERC-001" } },
+    { eventId: "blogViewed",         properties: { entryId: "12345", title: "My Blog Post", numberOfWords: 800, type: "blog", subtype: "article", externalReferenceCode: "ERC-001" } },
     { eventId: "blogClicked",        properties: { entryId: "12345", tagName: "a", href: "https://example.com/target", text: "Read more", src: "" } },
-    { eventId: "blogDepthReached",   properties: { entryId: "12345", title: "My Blog Post", numberOfWords: "800", type: "blog", subtype: "article", externalReferenceCode: "ERC-001", depth: "50", sessionId: "sess-001" } },
-    { eventId: "blogImpressionMade", properties: { entryId: "12345", title: "My Blog Post", numberOfWords: "800", type: "blog", subtype: "article", externalReferenceCode: "ERC-001" } },
+    { eventId: "blogDepthReached",   properties: { entryId: "12345", title: "My Blog Post", numberOfWords: 800, type: "blog", subtype: "article", externalReferenceCode: "ERC-001", depth: 50, sessionId: "sess-001" } },
+    { eventId: "blogImpressionMade", properties: { entryId: "12345", title: "My Blog Post", numberOfWords: 800, type: "blog", subtype: "article", externalReferenceCode: "ERC-001" } },
   ],
   Form: [
     { eventId: "formViewed",    properties: { formId: "form-001", title: "Contact Form", externalReferenceCode: "ERC-001" } },
     { eventId: "formSubmitted", properties: { formId: "form-001", title: "Contact Form", externalReferenceCode: "ERC-001" } },
     { eventId: "fieldFocused",  properties: { formId: "form-001", title: "Contact Form", externalReferenceCode: "ERC-001", fieldName: "email" } },
-    { eventId: "fieldBlurred",  properties: { formId: "form-001", title: "Contact Form", externalReferenceCode: "ERC-001", fieldName: "email", focusDuration: "3200" } },
+    { eventId: "fieldBlurred",  properties: { formId: "form-001", title: "Contact Form", externalReferenceCode: "ERC-001", fieldName: "email", focusDuration: 3200 } },
   ],
   Document: [
     { eventId: "documentDownloaded",     properties: { fileEntryId: "67890", title: "My Document.pdf", fileEntryVersion: "1.0", externalReferenceCode: "ERC-001" } },
@@ -46,9 +46,9 @@ const EVENT_TEMPLATES = {
     { eventId: "documentPreviewed",      properties: { fileEntryId: "67890", title: "My Document.pdf", fileEntryVersion: "1.0", externalReferenceCode: "ERC-001" } },
   ],
   WebContent: [
-    { eventId: "webContentViewed",         properties: { articleId: "11111", title: "My Web Content", numberOfWords: "500", type: "web-content", subtype: "article", webContentResourcePk: "22222", externalReferenceCode: "ERC-001" } },
+    { eventId: "webContentViewed",         properties: { articleId: "11111", title: "My Web Content", numberOfWords: 500, type: "web-content", subtype: "article", webContentResourcePk: "22222", externalReferenceCode: "ERC-001" } },
     { eventId: "webContentClicked",        properties: { articleId: "11111", tagName: "a", href: "https://example.com/target", text: "Click here", src: "" } },
-    { eventId: "webContentImpressionMade", properties: { articleId: "11111", title: "My Web Content", numberOfWords: "500", type: "web-content", subtype: "article", webContentResourcePk: "22222", externalReferenceCode: "ERC-001" } },
+    { eventId: "webContentImpressionMade", properties: { articleId: "11111", title: "My Web Content", numberOfWords: 500, type: "web-content", subtype: "article", webContentResourcePk: "22222", externalReferenceCode: "ERC-001" } },
   ],
   ObjectEntry: [
     { eventId: "objectEntryViewed",         properties: { objectDefinitionName: "MyObject", externalReferenceCode: "ERC-001", title: "My Object Entry", mimeType: "application/pdf", assetTags: '[{"id":"1","name":"tag-1"}]', assetCategories: '[{"id":"1","name":"category-1"}]' } },
@@ -60,14 +60,14 @@ const EVENT_TEMPLATES = {
     { eventId: "assetClicked",      properties: { assetId: "custom-001", category: "custom", title: "My Asset", tagName: "a", href: "https://example.com/target", text: "Click here", src: "" } },
     { eventId: "assetDownloaded",   properties: { assetId: "custom-001", category: "custom", title: "My Asset" } },
     { eventId: "assetSubmitted",    properties: { assetId: "custom-001", category: "custom", title: "My Asset" } },
-    { eventId: "assetDepthReached", properties: { assetId: "custom-001", category: "custom", title: "My Asset", depth: "50", sessionId: "sess-001" } },
+    { eventId: "assetDepthReached", properties: { assetId: "custom-001", category: "custom", title: "My Asset", depth: 50, sessionId: "sess-001" } },
   ],
   CustomEvent: [
     { eventId: "assetViewed",       properties: { assetId: "custom-001", category: "custom", title: "My Asset", formEnabled: "false" } },
     { eventId: "assetClicked",      properties: { assetId: "custom-001", category: "custom", title: "My Asset", tagName: "a", href: "https://example.com/target", text: "Click here", src: "" } },
     { eventId: "assetDownloaded",   properties: { assetId: "custom-001", category: "custom", title: "My Asset" } },
     { eventId: "assetSubmitted",    properties: { assetId: "custom-001", category: "custom", title: "My Asset" } },
-    { eventId: "assetDepthReached", properties: { assetId: "custom-001", category: "custom", title: "My Asset", depth: "50", sessionId: "sess-001" } },
+    { eventId: "assetDepthReached", properties: { assetId: "custom-001", category: "custom", title: "My Asset", depth: 50, sessionId: "sess-001" } },
   ],
 };
 
@@ -126,12 +126,13 @@ function getRandomValueForType(type, origin, currentValue) {
     case "Int":
       const int32 = new Int32Array(1);
       crypto.getRandomValues(int32);
-      return int32[0].toString();
+      return Math.abs(int32[0]).toString();
 
     case "Long":
       const int64 = new BigInt64Array(1);
       crypto.getRandomValues(int64);
-      return int64[0].toString();
+      const val = int64[0] < 0n ? -int64[0] : int64[0];
+      return val.toString();
 
     case "Float":
     case "Double":
@@ -167,7 +168,7 @@ function getRandomValueForType(type, origin, currentValue) {
   }
 }
 
-function createPropertyRow(key = "", value = "", randomize = true, type = "String") {
+function createPropertyRow(key = "", value = "", randomize = false, type = "String") {
   const row = document.createElement("div");
   row.className = "prop-row";
 
@@ -223,6 +224,9 @@ function createPropertyRow(key = "", value = "", randomize = true, type = "Strin
 
   toggleInput.addEventListener("change", triggerRandomize);
   typeSelect.addEventListener("change", triggerRandomize);
+  valueInput.addEventListener("input", () => {
+    toggleInput.checked = false;
+  });
 
   row.appendChild(keyInput);
   row.appendChild(sep);
@@ -256,8 +260,13 @@ function setProperties(props) {
   propertiesListEl.querySelectorAll(".prop-row").forEach((r) => r.remove());
   Object.entries(props).forEach(([k, v]) => {
     const val = (v && typeof v === "object" && "value" in v) ? v.value : String(v);
-    const rand = (v && typeof v === "object" && "randomize" in v) ? v.randomize : true;
-    const type = (v && typeof v === "object" && "type" in v) ? v.type : "String";
+    const rand = (v && typeof v === "object" && "randomize" in v) ? v.randomize : false;
+    let type = "String";
+    if (v && typeof v === "object" && "type" in v) {
+      type = v.type;
+    } else if (typeof v === "number") {
+      type = Number.isInteger(v) ? "Int" : "Float";
+    }
     propertiesListEl.appendChild(createPropertyRow(k, val, rand, type));
   });
   syncPropsEmpty();
@@ -332,9 +341,7 @@ function buildTemplatesList() {
         eventIdEl.value = tpl.eventId;
         applicationIdEl.value = appId;
         updateAppDot(appId);
-        const props = { ...tpl.properties };
-        if ("externalReferenceCode" in props) props.externalReferenceCode = crypto.randomUUID();
-        setProperties(props);
+        setProperties(tpl.properties);
         feedbackEl.style.display = "none";
       });
 
@@ -360,15 +367,20 @@ function randomizeProperties(props, origin) {
   const out = {};
   for (const [k, p] of Object.entries(props)) {
     const v = (p && typeof p === "object" && "value" in p) ? p.value : p;
-    const randomize = (p && typeof p === "object" && "randomize" in p) ? p.randomize : true;
+    const randomize = (p && typeof p === "object" && "randomize" in p) ? p.randomize : false;
     const type = (p && typeof p === "object" && "type" in p) ? p.type : "String";
 
-    if (!randomize) {
-      out[k] = v;
-      continue;
-    }
+    const val = randomize ? getRandomValueForType(type, origin, v) : v;
 
-    out[k] = getRandomValueForType(type, origin, v);
+    if (type === "Int" || type === "Long") {
+      const n = parseInt(val, 10);
+      out[k] = isNaN(n) ? 0 : n;
+    } else if (type === "Float" || type === "Double") {
+      const n = parseFloat(val);
+      out[k] = isNaN(n) ? 0.0 : n;
+    } else {
+      out[k] = val;
+    }
   }
   return out;
 }
