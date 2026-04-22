@@ -202,6 +202,10 @@ clearBtn.addEventListener("click", () => {
   subHeader.classList.add("hidden");
   searchEl.value = "";
   eventIdColorMap.clear();
+  const tabId = chrome.devtools.inspectedWindow.tabId;
+  if (tabId) {
+    chrome.storage.local.remove(`ac_events_${tabId}`);
+  }
 });
 
 eventsList.appendChild(createEmptyState());
@@ -222,9 +226,7 @@ const analyticsVersionInterval = setInterval(() => {
   );
 }, 1000);
 
-chrome.runtime.onMessage.addListener(function (message) {
-  if (message.type !== "request_report") return;
-
+function handleRequestReport(message) {
   chrome.storage.sync.get([LOCAL_STORAGE_STATUS], function (result) {
     if ((result[LOCAL_STORAGE_STATUS] || "enabled") !== "enabled") return;
 
@@ -234,4 +236,30 @@ chrome.runtime.onMessage.addListener(function (message) {
       renderEvents(message);
     }
   });
+}
+
+chrome.runtime.onMessage.addListener(function (message) {
+  if (message.type === "clear_events") {
+    if (message.tabId === chrome.devtools.inspectedWindow.tabId) {
+      eventsList.innerHTML = "";
+      eventsList.appendChild(createEmptyState());
+      subHeader.classList.add("hidden");
+    }
+    return;
+  }
+
+  if (message.type !== "request_report") return;
+  handleRequestReport(message);
 });
+
+// Load stored events on startup
+(function loadInitialEvents() {
+  const tabId = chrome.devtools.inspectedWindow.tabId;
+  if (tabId) {
+    const key = `ac_events_${tabId}`;
+    chrome.storage.local.get(key, (result) => {
+      const events = result[key] || [];
+      events.forEach(handleRequestReport);
+    });
+  }
+})();
